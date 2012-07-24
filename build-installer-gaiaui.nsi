@@ -5,17 +5,17 @@
 * git clone https://github.com/sihorton/b2g-desktop-profile into ../b2g-desktop-profile
 */
 
-!define PRODUCT_NAME "boot2gecko profile"
+!define PRODUCT_NAME "Gaia UI"
 !define PRODUCT_VERSION "0.1"
 !define PRODUCT_PUBLISHER "Simon Horton"
 
-Caption "boot2gecko profile"
+Caption "Gaia UI"
 
 !include "config.nsi"
 
 ; Welcome page
-!define MUI_WELCOMEPAGE_TITLE 'boot2gecko profile'
-!define MUI_TEXT_WELCOME_INFO_TEXT "b2g desktop does not include a gaia profile (the phone interface) at this time. The build scripts currently require linux / mac to run. Therefore this installer provides a pre-built gaia profile for windows users."
+!define MUI_WELCOMEPAGE_TITLE 'Gaia UI'
+!define MUI_TEXT_WELCOME_INFO_TEXT "b2g-desktop does not include GaiaUI (the firefox OS phone interface - including homescreen) at this time. The build scripts currently require linux / mac to run. Therefore this installer provides a pre-built GaiaUI profile for windows users."
 !insertmacro MUI_PAGE_WELCOME
 ; Components page
 ;!insertmacro MUI_PAGE_COMPONENTS

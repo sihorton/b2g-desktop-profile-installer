@@ -6,11 +6,11 @@
 * extract b2g into ..\b2g-extract
 */
 
-!define PRODUCT_NAME "boot2gecko desktop installer"
+!define PRODUCT_NAME "b2g-desktop"
 !define PRODUCT_VERSION "0.1"
 !define PRODUCT_PUBLISHER "Simon Horton"
 
-Caption "boot2gecko installer"
+Caption "b2g-desktop"
 !include "config.nsi"
 
 ; Welcome page
@@ -20,7 +20,7 @@ Caption "boot2gecko installer"
 ; Components page
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
-!define MUI_DIRECTORYPAGE_TEXT_TOP 'If installing the b2g client then select the directory to install to. If installing only the profile then find the directory where b2g is installed on your machine.'
+!define MUI_DIRECTORYPAGE_TEXT_TOP 'If installing b2g-desktop then select the directory to install to. If installing only Gaia UI to an existing b2g-desktop client then select the directory where b2g is installed on your machine.'
 
 !insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
