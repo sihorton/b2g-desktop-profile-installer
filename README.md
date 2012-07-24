@@ -20,3 +20,6 @@ To build the installer yourself:
 
 Simply compile build-installer-b2g or build-istaller-gaiaui to produce install-gaia.exe and install-b2g.exe
 
+
+
+If you are running 64-bit windows and get an error message saying "MSVCP100.dll missing" when running b2g-desktop then you will need to install the Microsoft Visual C++ 2010 Redistributable Package (x86). This is available for free from the following link: http://www.microsoft.com/download/en/confirmation.aspx?id=5555
