@@ -1,10 +1,16 @@
 ;NSIS script to install gaia profile to b2g directory.
+;Authors: Simon Horton
+/*
+* To setup your own build:
+* git clone https://github.com/sihorton/b2g-desktop-profile into ../b2g-desktop-profile
+*/
 
 !define PRODUCT_NAME "boot2gecko profile"
 !define PRODUCT_VERSION "0.1"
 !define PRODUCT_PUBLISHER "Simon Horton"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\AppMainExe.exe"
-!define PROFILE_DIR "b2g-desktop-profile"
+!define PROFILE_DIR_SRC "b2g-desktop-profile"
+!define PROFILE_DIR_DEST "b2g-desktop-profile"
 !include "MUI2.nsh"
 
 ; MUI Settings
@@ -32,7 +38,7 @@ Caption "boot2gecko profile"
 !define MUI_FINISHPAGE_RUN_TEXT "Run b2g-desktop"
 !define MUI_FINISHPAGE_RUN_FUNCTION "Launch-b2g"
 !insertmacro MUI_PAGE_FINISH
-;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\${PROFILE_DIR}\install-readme.txt"
+;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\${PROFILE_DIR_DEST}\install-readme.txt"
 !insertmacro MUI_PAGE_FINISH
 
 ; Language files
@@ -42,7 +48,7 @@ Caption "boot2gecko profile"
 
 Name "${PRODUCT_NAME}"
 OutFile "Install.exe"
-InstallDir "select b2g directory"
+InstallDir "[select b2g directory]"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 
@@ -54,20 +60,23 @@ Section "desktop-profile" SEC01
   ;Required gkmedias.dll is not part of b2g currently so add file if it is missing.
   IfFileExists "$INSTDIR\gkmedias.dll" skipGkmediasFix doGkmediasFix
   doGkmediasFix:
-  File "b2g-desktop-profile\gkmedias.dll"
+  File "../${PROFILE_DIR_SRC}\gkmedias.dll"
   skipGkmediasFix:
   ;required file is now copied or already existed.
   
-  CreateDirectory "$INSTDIR\${PROFILE_DIR}"
+  CreateDirectory "$INSTDIR\${PROFILE_DIR_DEST}"
 
   ;add readme
-  ;File /oname=${PROFILE_DIR}\install-readme.txt "readme.txt"
+  ;File /oname=${PROFILE_DIR_SRC}\install-readme.txt "readme.txt"
+
 
   ;Copy in the desktop profile.
-  File /r /x ".git" "${PROFILE_DIR}"
+  SetOutPath "$INSTDIR\${PROFILE_DIR_DEST}"
+  File /r /x ".git" "..\${PROFILE_DIR_SRC}\"
 
+  SetOutPath "$INSTDIR"
   CreateShortCut "$INSTDIR\b2g-profile.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR}"'
+  '-profile "${PROFILE_DIR_DEST}"'
 
 SectionEnd
 
