@@ -22,7 +22,7 @@ Section "Gaia UI" SEC02
   File /r /x ".git" "${PROFILE_DIR_SRC}\"
 
   SetOutPath "$INSTDIR"
-  CreateShortCut "$INSTDIR\b2g-profile.lnk" "$INSTDIR\b2g.exe" \
+  CreateShortCut "$INSTDIR\b2g-desktop.lnk" "$INSTDIR\b2g.exe" \
   '-profile "${PROFILE_DIR_DEST}"'
 
 SectionEnd

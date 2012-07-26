@@ -8,6 +8,7 @@
 !define PRODUCT_NAME "Gaia UI"
 !define PRODUCT_VERSION "0.1"
 !define PRODUCT_PUBLISHER "Simon Horton"
+!define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
 Caption "Gaia UI"
 
