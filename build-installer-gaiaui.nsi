@@ -10,8 +10,6 @@
 !define PRODUCT_PUBLISHER "Simon Horton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
-Caption "Gaia UI"
-
 !include "config.nsi"
 
 ; Welcome page
