@@ -129,6 +129,10 @@ Section -AdditionalIcons
       "$SMPROGRAMS\$ICONS_GROUP\Boot2Gecko.url" \
       "http://developer.mozilla.org/en/Mozilla/Boot_to_Gecko/"
   
+  !insertmacro CreateInternetShortcut \
+      "$SMPROGRAMS\$ICONS_GROUP\b2g-desktop downloads.url" \
+      "http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-central/"
+
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
