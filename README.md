@@ -1,13 +1,9 @@
-b2g-desktop-profile-installer
-=============================
-
 Quick Start:
 ------------
 
-Click the downloads link and download and run the installer. This will install a b2g-desktop client, gaia 
-(the firefox os webapps and homescreen that provide the user interface) and get you started out of the box.
-
 https://github.com/downloads/sihorton/b2g-desktop-profile-installer/b2g-gaia-desktop.exe
+
+Run the installer and it will setup b2g-desktop, gaia and dependancies for you and then run b2g-desktop.
 
 Background:
 -----------
