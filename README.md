@@ -13,11 +13,17 @@ In order to get the actual user interface you need to compile the GaiaUI and the
 at the moment. This project uses http://nsis.sourceforge.net/ to create an installer that allows windows users
 to try out b2g without having to have access to a mac / linux box or have to use a virtual machine.
 
-Update your install:
---------------------
+Update b2g-desktop from nightly:
+--------------------------------
 If you want to try out a newer b2g-desktop build from http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-central/
 extract the download into the b2g-gaia-desktop directory over the existing code.
 
+Update gaia:
+------------
+Follow the instructions at https://developer.mozilla.org/en/Mozilla/Boot_to_Gecko/Building_and_installing_Boot_to_Gecko
+You need only follow the steps for gaia. The build scripts for gaia are currently only available on mac / linux.
+The make script will create a profile directory. This directory is cross platform and you can then copy it over the
+contents of the gaia directory under b2g-gaia-desktop.
 
 To build the installer yourself:
 --------------------------------
