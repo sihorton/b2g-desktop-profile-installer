@@ -44,7 +44,7 @@ Name "${PRODUCT_NAME}"
 OutFile "install-gaiaui.exe"
 InstallDir "[select b2g directory]"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
-ShowInstDetails show
+ShowInstDetails hide
 
 !include "gaiaui-files.nsi"
 
