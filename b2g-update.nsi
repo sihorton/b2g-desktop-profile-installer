@@ -5,6 +5,7 @@
 !define PRODUCT_VERSION "0.6"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
+!define NEW_VERSION_URL "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt"
 
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -12,6 +13,10 @@
 !include "MUI2.nsh"
 !define MUI_ABORTWARNING
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
+
+!define MUI_TEXT_INSTALLING_TITLE "Downloading"
+!define MUI_TEXT_INSTALLING_SUBTITLE "Please wait while ${PRODUCT_NAME} is being downloaded."
+
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
 
@@ -44,7 +49,7 @@ Section "MainSection" SEC01
     
     normalinstall:
     ;download version info
-    inetc::get /SILENT  "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$TEMP\version-latest.txt"
+    inetc::get /SILENT  "${NEW_VERSION_URL}" "$TEMP\version-latest.txt"
 
     ;get versions
     IfFileExists "$TEMP\version-latest.txt" +1 nothingnew
@@ -54,7 +59,7 @@ Section "MainSection" SEC01
     FileClose $4
 
     getinstaller:
-    inetc::get "$NewInstaller" "$TEMP\UpdateInstall.exe"
+    inetc::get "$NewInstaller" "$TEMP\${PRODUCT_NAME}.exe"
     Pop $0
     StrCmp $0 "OK" doinstall error
     error:

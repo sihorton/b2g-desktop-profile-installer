@@ -43,7 +43,7 @@ var ICONS_GROUP
 ; Finish page
 !define MUI_FINISHPAGE_TEXT "In b2g-desktop Press [Home] key to return to the homescreen after launching an app."
 !define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Run b2g-desktop"
+!define MUI_FINISHPAGE_RUN_TEXT "Run ${PRODUCT_NAME}"
 !define MUI_FINISHPAGE_RUN_FUNCTION "Launch-b2g"
 ;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\${PROFILE_DIR_DEST}\install-readme.txt"
 !insertmacro MUI_PAGE_FINISH
@@ -141,6 +141,13 @@ Section "Gaia UI" SEC02
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
+; Section descriptions
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "an emulator for running boot2gecko on a windows pc."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Gaia is the user interface (webapps and os user interface) for boot2gecko"
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
+
+/*
 Section -AdditionalIcons
   SetShellVarContext all
   SetOutPath $INSTDIR
@@ -175,13 +182,6 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
-
-; Section descriptions
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "an emulator for running boot2gecko on a windows pc."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Gaia is the user interface (webapps and os user interface) for boot2gecko"
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
-
 
 Function un.onUninstSuccess
   HideWindow

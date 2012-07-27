@@ -30,7 +30,7 @@ Icon "b2g.ico"
 ShowInstDetails hide
 
 Section "MainSection" SEC01
-    ;SetAutoClose true
+    SetAutoClose true
     Var /GLOBAL MyPath
     Var /GLOBAL AvailableVersion
     Var /GLOBAL NewInstaller
