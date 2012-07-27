@@ -1,5 +1,5 @@
 /**
-* lauch boot2gecko and check for updates.
+* launch boot2gecko and check for updates.
 */
 !define PRODUCT_NAME "b2g-gaia-desktop"
 !define PRODUCT_VERSION "0.3"
@@ -25,7 +25,7 @@ Icon "b2g.ico"
 ShowInstDetails hide
 
 Function .onInit
-   SetSilent silent
+    SetSilent silent
  FunctionEnd
 
 Section "MainSection" SEC01
@@ -38,7 +38,7 @@ Section "MainSection" SEC01
     Push "$EXEPATH"
     Call GetParent
     Pop $MyPath
-    
+
     Exec '$MYPATH\b2g.exe -profile "${PROFILE_DIR_DEST}"'
 
     Push "NOUPDATE"      ; push the search string onto the stack
@@ -70,18 +70,6 @@ checkupdates:
     MessageBox MB_YESNO "A new version ($AvailableVersion) of ${PRODUCT_NAME} is available. Would you like to download it?" IDYES +1 IDNO nothingnew
 
     SetSilent normal
-    
-    inetc::get "$NewInstaller" "$TEMP\UpdateInstall.exe"
-    Pop $0
-    StrCmp $0 "OK" doinstall nothingnew
-    doinstall:
-      ReadRegStr $R0 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString"
-      IfFileExists $R0 +1 RunUpdate
-      ExecWait '"$R0" /S _?=$INSTDIR'
-
-      RunUpdate:
-      ExecWait '$TEMP\UpdateInstall.exe'
-      Delete "$TEMP\UpdateInstall.exe"
     
     nothingnew:
     ;Pop $0
@@ -122,29 +110,3 @@ SectionEnd
 
 Section -Post
 SectionEnd
-Function GetParent
-
-  Exch $R0
-  Push $R1
-  Push $R2
-  Push $R3
-
-  StrCpy $R1 0
-  StrLen $R2 $R0
-
-  loop:
-    IntOp $R1 $R1 + 1
-    IntCmp $R1 $R2 get 0 get
-    StrCpy $R3 $R0 1 -$R1
-    StrCmp $R3 "\" get
-  Goto loop
-
-  get:
-    StrCpy $R0 $R0 -$R1
-
-    Pop $R3
-    Pop $R2
-    Pop $R1
-    Exch $R0
-
-FunctionEnd

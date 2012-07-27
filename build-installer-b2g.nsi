@@ -84,6 +84,7 @@ Section "b2g-desktop" SEC01
   ;install version info and launch / auto update.
   File "version.txt"
   File "b2g-desktop.exe"
+  File "b2g-update.exe"
   ;install code
   File /r /x ".git" "${B2G_DIR_SRC}\"
   File "${PROFILE_DIR_SRC}\gkmedias.dll"
@@ -123,10 +124,10 @@ Section "Gaia UI" SEC02
 ; Shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR_DEST}"'
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR_DEST}"'
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g-desktop.exe"
+  ;'-profile "${PROFILE_DIR_DEST}"'
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g-desktop.exe"
+  ;'-profile "${PROFILE_DIR_DEST}"'
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
