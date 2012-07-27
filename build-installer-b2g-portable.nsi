@@ -45,7 +45,6 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run b2g-desktop"
 !define MUI_FINISHPAGE_RUN_FUNCTION "Launch-b2g"
-!insertmacro MUI_PAGE_FINISH
 ;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\${PROFILE_DIR_DEST}\install-readme.txt"
 !define MUI_FINISHPAGE_TEXT "In b2g-desktop Press [Home] key to return to the homescreen after launching an app."
 !insertmacro MUI_PAGE_FINISH

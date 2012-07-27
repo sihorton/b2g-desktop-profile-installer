@@ -24,6 +24,7 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
+
 ; Components page
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
@@ -44,7 +45,6 @@ var ICONS_GROUP
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run b2g-desktop"
 !define MUI_FINISHPAGE_RUN_FUNCTION "Launch-b2g"
-!insertmacro MUI_PAGE_FINISH
 ;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\${PROFILE_DIR_DEST}\install-readme.txt"
 !insertmacro MUI_PAGE_FINISH
 
@@ -64,15 +64,26 @@ InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails hide
 ShowUnInstDetails hide
 
+Function .onInit
+; Check to see if already installed
+  ReadRegStr $R0 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString"
+  ReadRegStr $R1 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallDir"
+  IfFileExists $R0 +1 NotInstalled
+  MessageBox MB_YESNO "${PRODUCT_NAME} is already installed, should we uninstall the existing version first?" IDYES Uninstall IDNO NotInstalled
+Uninstall:
+  ExecWait '"$R0" /S _?=$INSTDIR'
+  Delete "$R0"
+  RmDir "$R1"
+NotInstalled:
+FunctionEnd
 
 Section "b2g-desktop" SEC01
-SetShellVarContext all
+  SetShellVarContext all
   SetOverwrite ifnewer
   SetOutPath "$INSTDIR"
   CreateDirectory "$INSTDIR"
   File /r /x ".git" "${B2G_DIR_SRC}\"
   File "${PROFILE_DIR_SRC}\gkmedias.dll"
-
   
 ; Shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -83,7 +94,7 @@ SetShellVarContext all
 SectionEnd
 
 Section "Gaia UI" SEC02
-SetShellVarContext all
+  SetShellVarContext all
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
 
@@ -141,7 +152,9 @@ Section -Post
   SetShellVarContext all
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\b2g.exe"
+  
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallDir" "$INSTDIR"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\b2g.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
@@ -158,12 +171,22 @@ SectionEnd
 
 Function un.onUninstSuccess
   HideWindow
+  IfSilent +2 0
   MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer."
 FunctionEnd
 
 Function un.onInit
+IfSilent silent noisy
+  noisy:
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
   Abort
+  goto ok
+  
+  silent:
+  SetAutoClose true
+
+  ok:
+ 
 FunctionEnd
 
 Section Uninstall
