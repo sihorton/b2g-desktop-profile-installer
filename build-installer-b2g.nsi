@@ -81,6 +81,10 @@ Section "b2g-desktop" SEC01
   SetOverwrite ifnewer
   SetOutPath "$INSTDIR"
   CreateDirectory "$INSTDIR"
+  ;install version info and launch / auto update.
+  File "version.txt"
+  File "b2g-desktop.exe"
+  ;install code
   File /r /x ".git" "${B2G_DIR_SRC}\"
   File "${PROFILE_DIR_SRC}\gkmedias.dll"
   
@@ -111,8 +115,8 @@ Section "Gaia UI" SEC02
   File /r /x ".git" /x "install.bat" "${PROFILE_DIR_SRC}\"
 
   SetOutPath "$INSTDIR"
-  CreateShortCut "$INSTDIR\b2g-desktop.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR_DEST}"'
+  ;CreateShortCut "$INSTDIR\b2g-desktop.lnk" "$INSTDIR\b2g.exe" \
+  ;'-profile "${PROFILE_DIR_DEST}"'
 
 
 
@@ -203,6 +207,7 @@ Section Uninstall
 SectionEnd
 
 Function Launch-b2g
-  ExecShell "" "$INSTDIR\b2g-desktop.lnk"
+  ;ExecShell "" "$INSTDIR\b2g-desktop.exe"
+  Exec "$INSTDIR\b2g-desktop.exe /NOUPDATE"
 FunctionEnd
 
