@@ -31,6 +31,7 @@ To build the installer yourself:
 1) install nsis from http://nsis.sourceforge.net/
 
 2) create the following directory structure:
+
   installer/ (git clone https://github.com/sihorton/b2g-desktop-profile-installer)
   
   b2g-desktop-profile/ (git clone https://github.com/sihorton/b2g-desktop-profile)
