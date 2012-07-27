@@ -59,9 +59,8 @@ Section "MainSection" SEC01
       IfFileExists $R0 +1 RunUpdate
       ExecWait '"$R0" /S _?=$INSTDIR'
       RunUpdate:
-      ExecWait '$TEMP\UpdateInstall.exe'
-      Delete "$TEMP\UpdateInstall.exe"
-      
+      Exec '$TEMP\UpdateInstall.exe'
+      Quit
 nothingnew:
 
 SectionEnd
