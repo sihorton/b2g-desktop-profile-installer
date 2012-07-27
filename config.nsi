@@ -21,4 +21,15 @@ Caption "${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 
+VIProductVersion "${PRODUCT_VERSION}.0.0"
+VIAddVersionKey ProductName "${PRODUCT_NAME}"
+VIAddVersionKey Comments "An installer for boot2gecko / Firefox OS desktop on windows. This includes gaia the webapps / interface so it works out of the box."
+;VIAddVersionKey CompanyName company
+;VIAddVersionKey LegalCopyright legal
+VIAddVersionKey FileDescription "${PRODUCT_NAME}"
+VIAddVersionKey FileVersion "${PRODUCT_VERSION}"
+VIAddVersionKey ProductVersion "${PRODUCT_VERSION}"
+VIAddVersionKey InternalName "${PRODUCT_NAME}"
+;VIAddVersionKey LegalTrademarks ""
+VIAddVersionKey OriginalFilename "${PRODUCT_NAME}.exe"
 

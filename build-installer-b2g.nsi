@@ -12,6 +12,7 @@
 
 !define PRODUCT_NAME "b2g-gaia-desktop"
 !define PRODUCT_VERSION "0.2"
+!define VIPRODUCT_VERSION "${PRODUCT_VERSION}.0.0"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
@@ -62,6 +63,7 @@ InstallDir "$PROGRAMFILES\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails hide
 ShowUnInstDetails hide
+
 
 Section "b2g-desktop" SEC01
 SetShellVarContext all
