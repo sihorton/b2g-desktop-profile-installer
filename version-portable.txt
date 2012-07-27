@@ -1,0 +1,2 @@
+0.6
+https://github.com/downloads/sihorton/b2g-desktop-profile-installer/b2g-portable_0.6.exe

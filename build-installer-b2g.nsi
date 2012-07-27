@@ -13,6 +13,8 @@
 !define PRODUCT_NAME "b2g-gaia-desktop"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
+!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+!define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
 !include "config.nsi"
 
@@ -216,7 +218,7 @@ Section Uninstall
 SectionEnd
 
 Function Launch-b2g
-  ;ExecShell "" "$INSTDIR\b2g-desktop.exe"
+  ;ExecShell "" "$INSTDIR\b2g-desktop.lnk"
   Exec "$INSTDIR\b2g-desktop.exe /NOUPDATE"
 FunctionEnd
 

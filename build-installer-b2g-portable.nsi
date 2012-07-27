@@ -11,7 +11,6 @@
 */
 
 !define PRODUCT_NAME "b2g-portable"
-!define PRODUCT_VERSION "0.4"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
@@ -23,15 +22,15 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
-; License page
-;!insertmacro MUI_PAGE_LICENSE "c:\path\to\licence\YourSoftwareLicence.txt"
+
 ; Components page
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
 !define MUI_DIRECTORYPAGE_TEXT_TOP 'If installing b2g-desktop then select the directory to install to. If you have selected to only instal Gaia UI to an existing b2g-desktop client then select the directory where b2g is installed on your machine.'
 !insertmacro MUI_PAGE_DIRECTORY
 ; Start menu page
-/*var ICONS_GROUP
+/*
+var ICONS_GROUP
 !define MUI_STARTMENUPAGE_NODISABLE
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "b2g-gaia-desktop"
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
@@ -42,11 +41,11 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
+!define MUI_FINISHPAGE_TEXT "In b2g-desktop Press [Home] key to return to the homescreen after launching an app."
 !define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Run b2g-desktop"
+!define MUI_FINISHPAGE_RUN_TEXT "Run ${PRODUCT_NAME}"
 !define MUI_FINISHPAGE_RUN_FUNCTION "Launch-b2g"
 ;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\${PROFILE_DIR_DEST}\install-readme.txt"
-!define MUI_FINISHPAGE_TEXT "In b2g-desktop Press [Home] key to return to the homescreen after launching an app."
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -59,17 +58,23 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 ; MUI end ------
 
 Name "${PRODUCT_NAME}"
-OutFile "${PRODUCT_NAME}.exe"
+OutFile "${PRODUCT_NAME}_${PRODUCT_VERSION}.exe"
 InstallDir "$DOCUMENTS\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails hide
 ShowUnInstDetails hide
 
+
 Section "b2g-desktop" SEC01
-SetShellVarContext all
+  SetShellVarContext all
   SetOverwrite ifnewer
   SetOutPath "$INSTDIR"
   CreateDirectory "$INSTDIR"
+  ;install version info and launch / auto update.
+  File /oname=version.txt "version-portable.txt"
+  File "b2g-desktop.exe"
+  File /oname=b2g-update.exe "b2g-portable-update.exe"
+  ;install code
   File /r /x ".git" "${B2G_DIR_SRC}\"
   File "${PROFILE_DIR_SRC}\gkmedias.dll"
 
@@ -84,7 +89,7 @@ SetShellVarContext all
 SectionEnd
 
 Section "Gaia UI" SEC02
-SetShellVarContext all
+  SetShellVarContext all
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
 
@@ -102,8 +107,9 @@ SetShellVarContext all
   File /r /x ".git" /x "install.bat" "${PROFILE_DIR_SRC}\"
 
   SetOutPath "$INSTDIR"
-  CreateShortCut "$INSTDIR\b2g-desktop.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR_DEST}"'
+  ;CreateShortCut "$INSTDIR\b2g-desktop.lnk" "$INSTDIR\b2g.exe" \
+  ;'-profile "${PROFILE_DIR_DEST}"'
+
 
 
 /*
@@ -123,7 +129,6 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "an emulator for running boot2gecko on a windows pc."
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Gaia is the user interface (webapps and os user interface) for boot2gecko"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
-
 
 /*
 Section -AdditionalIcons
@@ -146,9 +151,7 @@ Section -AdditionalIcons
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
-*/
 
-/*
 Section -Post
   SetShellVarContext all
   WriteUninstaller "$INSTDIR\uninst.exe"
@@ -160,17 +163,25 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
-*/
 
-/*
 Function un.onUninstSuccess
   HideWindow
+  IfSilent +2 0
   MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer."
 FunctionEnd
 
 Function un.onInit
+IfSilent silent noisy
+  noisy:
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
   Abort
+  goto ok
+  
+  silent:
+  SetAutoClose true
+
+  ok:
+ 
 FunctionEnd
 
 Section Uninstall
@@ -189,6 +200,7 @@ SectionEnd
 */
 
 Function Launch-b2g
-  ExecShell "" "$INSTDIR\b2g-desktop.lnk"
+  ;ExecShell "" "$INSTDIR\b2g-desktop.lnk"
+  Exec "$INSTDIR\b2g-desktop.exe /NOUPDATE"
 FunctionEnd
 

@@ -5,7 +5,7 @@
 !define PRODUCT_VERSION "0.6"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
-
+!define NEW_VERSION_URL "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
@@ -48,7 +48,7 @@ Section "MainSection" SEC01
     StrCmp $2 "checkupdates" checkupdates nothingnew
 checkupdates:
     ;download version info
-    inetc::get /SILENT  "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$TEMP\version-latest.txt"
+    inetc::get /SILENT  "${NEW_VERSION_URL}" "$TEMP\version-latest.txt"
 
     ;get versions
     IfFileExists "$TEMP\version-latest.txt" +1 nothingnew
