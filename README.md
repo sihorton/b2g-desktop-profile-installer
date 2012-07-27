@@ -31,8 +31,11 @@ To build the installer yourself:
 1) install nsis from http://nsis.sourceforge.net/
 
 2) create the following directory structure:
+
   installer/ (git clone https://github.com/sihorton/b2g-desktop-profile-installer)
+  
   b2g-desktop-profile/ (git clone https://github.com/sihorton/b2g-desktop-profile)
+  
   b2g-extract (http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-central/)
 
 Compile build-installer-b2g.nsi with nsis.
