@@ -2,7 +2,7 @@
 * launch boot2gecko and check for updates.
 */
 !define PRODUCT_NAME "b2g-gaia-desktop"
-!define PRODUCT_VERSION "0.4"
+!define PRODUCT_VERSION "0.5"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
 
@@ -17,6 +17,7 @@
 
 !include "SupportFunctions.nsi"
 
+RequestExecutionLevel user
 Name "${PRODUCT_NAME}"
 OutFile "b2g-desktop.exe"
 Icon "b2g.ico"
@@ -49,11 +50,11 @@ Section "MainSection" SEC01
     StrCmp $2 "checkupdates" checkupdates nothingnew
 checkupdates:
     ;download version info
-    inetc::get /SILENT  "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$MyPath\version-latest.txt"
+    inetc::get /SILENT  "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$TEMP\version-latest.txt"
 
     ;get versions
-    IfFileExists "$MyPath\version-latest.txt" +1 nothingnew
-    FileOpen $4 "$MyPath\version-latest.txt" r
+    IfFileExists "$TEMP\version-latest.txt" +1 nothingnew
+    FileOpen $4 "$TEMP\version-latest.txt" r
     FileRead $4 $AvailableVersion
     FileRead $4 $NewInstaller
     FileClose $4
@@ -69,7 +70,8 @@ checkupdates:
     StrCmp $0 "2" +1 nothingnew
     MessageBox MB_YESNO "A new version ($AvailableVersion) of ${PRODUCT_NAME} is available. Would you like to download it?" IDYES +1 IDNO nothingnew
 
-    Exec "$MyPath\b2g-update.exe"
+    ;Exec "$MyPath\b2g-update.exe"
+    ExecShell open '$MyPath\b2g-update.exe'
     
     nothingnew:
     ;Pop $0

@@ -11,7 +11,7 @@
 */
 
 !define PRODUCT_NAME "b2g-gaia-desktop"
-!define PRODUCT_VERSION "0.4"
+!define PRODUCT_VERSION "0.5"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
@@ -68,7 +68,7 @@ Function .onInit
   ReadRegStr $R0 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString"
   ReadRegStr $R1 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallDir"
   IfFileExists $R0 +1 NotInstalled
-  MessageBox MB_YESNO "${PRODUCT_NAME} is already installed, should we uninstall the existing version first?" IDYES Uninstall IDNO NotInstalled
+  MessageBox MB_YESNO "${PRODUCT_NAME} is already installed, should we uninstall the existing version first?$\n(No will install over the top of the existing version)." IDYES Uninstall IDNO NotInstalled
 Uninstall:
   ExecWait '"$R0" /S _?=$INSTDIR'
   Delete "$R0"

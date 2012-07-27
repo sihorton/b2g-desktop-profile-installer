@@ -2,7 +2,7 @@
 * launch boot2gecko and check for updates.
 */
 !define PRODUCT_NAME "b2g-update"
-!define PRODUCT_VERSION "0.3"
+!define PRODUCT_VERSION "0.5"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
 
@@ -17,6 +17,7 @@
 
 !include "SupportFunctions.nsi"
 
+RequestExecutionLevel admin
 Caption "${PRODUCT_NAME}"
 Name "${PRODUCT_NAME}"
 OutFile "${PRODUCT_NAME}.exe"
@@ -35,8 +36,12 @@ Section "MainSection" SEC01
     Call GetParent
     Pop $MyPath
 
-    IfFileExists "$MyPath\version-latest.txt" +1 nothingnew
-    FileOpen $4 "$MyPath\version-latest.txt" r
+    ;download version info
+    inetc::get /SILENT  "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$TEMP\version-latest.txt"
+
+    ;get versions
+    IfFileExists "$TEMP\version-latest.txt" +1 nothingnew
+    FileOpen $4 "$TEMP\version-latest.txt" r
     FileRead $4 $AvailableVersion
     FileRead $4 $NewInstaller
     FileClose $4
@@ -49,13 +54,14 @@ Section "MainSection" SEC01
      Abort
      
     doinstall:
+    ;run uninstaller.
       ReadRegStr $R0 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString"
       IfFileExists $R0 +1 RunUpdate
       ExecWait '"$R0" /S _?=$INSTDIR'
-
       RunUpdate:
       ExecWait '$TEMP\UpdateInstall.exe'
       Delete "$TEMP\UpdateInstall.exe"
+      
 nothingnew:
 
 SectionEnd
