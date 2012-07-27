@@ -2,7 +2,7 @@
 * launch boot2gecko and check for updates.
 */
 !define PRODUCT_NAME "b2g-gaia-desktop"
-!define PRODUCT_VERSION "0.5"
+!define PRODUCT_VERSION "0.6"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
 
@@ -21,8 +21,6 @@ RequestExecutionLevel user
 Name "${PRODUCT_NAME}"
 OutFile "b2g-desktop.exe"
 Icon "b2g.ico"
-;InstallDir "$PROGRAMFILES\DBBackup"
-;InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails hide
 
 Function .onInit

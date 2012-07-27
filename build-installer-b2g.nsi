@@ -11,7 +11,6 @@
 */
 
 !define PRODUCT_NAME "b2g-gaia-desktop"
-!define PRODUCT_VERSION "0.5"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
@@ -64,15 +63,24 @@ ShowInstDetails hide
 ShowUnInstDetails hide
 
 Function .onInit
+  Var /GLOBAL DelDir
+  ;try to see if it is running--
+  FindProcDLL::FindProc "b2g.exe"
+  IntCmp $R0 1 0 notRunning
+    MessageBox MB_OK|MB_ICONEXCLAMATION "b2g-desktop is running. Click ok to close the process." /SD IDOK
+    KillProcDLL::KillProc "b2g.exe"
+notRunning:
+
+  ReadRegStr $DelDir ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallDir"
+
 ; Check to see if already installed
   ReadRegStr $R0 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString"
-  ReadRegStr $R1 ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallDir"
   IfFileExists $R0 +1 NotInstalled
   MessageBox MB_YESNO "${PRODUCT_NAME} is already installed, should we uninstall the existing version first?$\nNo will install over the top of the existing version." IDYES Uninstall IDNO NotInstalled
 Uninstall:
   ExecWait '"$R0" /S _?=$INSTDIR'
   Delete "$R0"
-  RmDir "$R1"
+  RmDir "$DelDir"
 NotInstalled:
 FunctionEnd
 

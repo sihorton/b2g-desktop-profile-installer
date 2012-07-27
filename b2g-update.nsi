@@ -2,7 +2,7 @@
 * launch boot2gecko and check for updates.
 */
 !define PRODUCT_NAME "b2g-update"
-!define PRODUCT_VERSION "0.5"
+!define PRODUCT_VERSION "0.6"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
 
@@ -22,8 +22,6 @@ Caption "${PRODUCT_NAME}"
 Name "${PRODUCT_NAME}"
 OutFile "${PRODUCT_NAME}.exe"
 Icon "b2g.ico"
-;InstallDir "$PROGRAMFILES\DBBackup"
-;InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails hide
 
 Section "MainSection" SEC01
@@ -36,6 +34,15 @@ Section "MainSection" SEC01
     Call GetParent
     Pop $MyPath
 
+    IfFileExists "$TEMP\version-test.txt" testinstall normalinstall
+    testinstall:
+    FileOpen $4 "$TEMP\version-test.txt" r
+    FileRead $4 $AvailableVersion
+    FileRead $4 $NewInstaller
+    FileClose $4
+    goto getinstaller
+    
+    normalinstall:
     ;download version info
     inetc::get /SILENT  "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$TEMP\version-latest.txt"
 
@@ -46,6 +53,7 @@ Section "MainSection" SEC01
     FileRead $4 $NewInstaller
     FileClose $4
 
+    getinstaller:
     inetc::get "$NewInstaller" "$TEMP\UpdateInstall.exe"
     Pop $0
     StrCmp $0 "OK" doinstall error

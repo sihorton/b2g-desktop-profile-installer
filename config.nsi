@@ -1,3 +1,10 @@
+/**
+* Following NSIS plugins are used..
+* - http://nsis.sourceforge.net/mediawiki/images/5/53/KillProcDll%26FindProcDll.zip
+* - inetc.dll
+*/
+
+!define PRODUCT_VERSION "0.6"
 Caption "${PRODUCT_NAME}"
 
 ;location of a b2g-desktop installation, download from http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-central/
