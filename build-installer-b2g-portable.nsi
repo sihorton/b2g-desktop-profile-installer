@@ -11,7 +11,7 @@
 */
 
 !define PRODUCT_NAME "b2g-portable"
-!define PRODUCT_VERSION "0.3"
+!define PRODUCT_VERSION "0.4"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 

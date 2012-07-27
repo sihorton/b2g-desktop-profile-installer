@@ -17,6 +17,7 @@
 
 !include "SupportFunctions.nsi"
 
+Caption "${PRODUCT_NAME}"
 Name "${PRODUCT_NAME}"
 OutFile "${PRODUCT_NAME}.exe"
 Icon "b2g.ico"
@@ -25,6 +26,7 @@ Icon "b2g.ico"
 ShowInstDetails hide
 
 Section "MainSection" SEC01
+    SetAutoClose true
     Var /GLOBAL MyPath
     Var /GLOBAL AvailableVersion
     Var /GLOBAL NewInstaller

@@ -1,2 +1,2 @@
-0.3
-https://github.com/downloads/sihorton/b2g-desktop-profile-installer/b2g-gaia-desktop.exe
+0.4
+https://github.com/downloads/sihorton/b2g-desktop-profile-installer/b2g-gaia-desktop_0.4.exe

@@ -2,7 +2,7 @@
 * launch boot2gecko and check for updates.
 */
 !define PRODUCT_NAME "b2g-gaia-desktop"
-!define PRODUCT_VERSION "0.3"
+!define PRODUCT_VERSION "0.4"
 !define PRODUCT_PUBLISHER "sihorton"
 !define PROFILE_DIR_DEST "gaia"
 
