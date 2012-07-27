@@ -15,18 +15,27 @@
 !define PRODUCT_WEB_SITE "http://github.com/sihorton/b2g-desktop-profile-installer"
 
 !include "config.nsi"
+LangString "^ComponentsSubText2_NoInstTypes" ${LANG_ENGLISH} "Select components"
+LangString "^ComponentsText" ${LANG_ENGLISH} "Check the components you want to have and uncheck the components you don't want to have. $_CLICK"
 
 !macro CreateInternetShortcut FILENAME URL
 WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 !macroend
 
 ; Welcome page
+!define MUI_TEXT_WELCOME_INFO_TITLE "Welcome to ${PRODUCT_NAME}"
+!define MUI_TEXT_WELCOME_INFO_TEXT "This wizard will help you to extract ${PRODUCT_NAME} to a directory of your choice.$\r$\n$\r$\n$_CLICK"
 !insertmacro MUI_PAGE_WELCOME
 
 ; Components page
+!define MUI_TEXT_COMPONENTS_SUBTITLE "Choose which features of ${PRODUCT_NAME} you want to use."
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
-!define MUI_DIRECTORYPAGE_TEXT_TOP 'If installing b2g-desktop then select the directory to install to. If you have selected to only instal Gaia UI to an existing b2g-desktop client then select the directory where b2g is installed on your machine.'
+;!define MUI_DIRECTORYPAGE_TEXT_TOP 'If installing b2g-desktop then select the directory to install to. If you have selected to only instal Gaia UI to an existing b2g-desktop client then select the directory where b2g is installed on your machine.'
+!define MUI_DIRECTORYPAGE_TEXT_TOP 'Select the directory to install to. If you have selected to only instal Gaia UI to an existing b2g-desktop client then select the directory where b2g is installed on your machine.'
+
+!define MUI_TEXT_DIRECTORY_TITLE "Choose Directory Location"
+!define MUI_TEXT_DIRECTORY_SUBTITLE "Choose the folder in which to extract ${PRODUCT_NAME}."
 !insertmacro MUI_PAGE_DIRECTORY
 ; Start menu page
 /*
@@ -39,8 +48,11 @@ var ICONS_GROUP
 !insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 */
 ; Instfiles page
+!define MUI_TEXT_INSTALLING_TITLE "Extracting"
+!define MUI_TEXT_INSTALLING_SUBTITLE "Please wait while ${PRODUCT_NAME} is being extracted."
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
+!define MUI_TEXT_FINISH_INFO_TITLE "${PRODUCT_NAME} is complete."
 !define MUI_FINISHPAGE_TEXT "In b2g-desktop Press [Home] key to return to the homescreen after launching an app."
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run ${PRODUCT_NAME}"
@@ -63,7 +75,7 @@ InstallDir "$DOCUMENTS\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails hide
 ShowUnInstDetails hide
-
+InstallButtonText "Extract"
 
 Section "b2g-desktop" SEC01
   SetShellVarContext all
@@ -72,7 +84,7 @@ Section "b2g-desktop" SEC01
   CreateDirectory "$INSTDIR"
   ;install version info and launch / auto update.
   File /oname=version.txt "version-portable.txt"
-  File "b2g-desktop.exe"
+  File /oname=b2g-desktop.exe "b2g-desktop-portable.exe"
   File /oname=b2g-update.exe "b2g-portable-update.exe"
   ;install code
   File /r /x ".git" "${B2G_DIR_SRC}\"
