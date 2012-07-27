@@ -69,7 +69,7 @@ checkupdates:
     StrCmp $0 "2" +1 nothingnew
     MessageBox MB_YESNO "A new version ($AvailableVersion) of ${PRODUCT_NAME} is available. Would you like to download it?" IDYES +1 IDNO nothingnew
 
-    SetSilent normal
+    Exec "$MyPath\b2g-update.exe"
     
     nothingnew:
     ;Pop $0
