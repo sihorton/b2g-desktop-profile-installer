@@ -72,37 +72,7 @@ checkupdates:
     ExecShell open '$MyPath\b2g-update.exe'
     
     nothingnew:
-    ;Pop $0
-    ;MessageBox MB_OK "$0"
-
-/*
-    NSISdl::download "https://raw.github.com/sihorton/b2g-desktop-profile-installer/master/version.txt" "$R0\latestv.txt"
-         Pop $R0 ;Get the return value
-        ;StrCmp $R0 "success" +6
-MessageBox MB_OK "$R0"
-*/
-         /*
-        ;http://nsis.sourceforge.net/Inetc_plug-in#post_DLL_Function
-        inetc::post p=NSIS8542Pass \
-        "http://localhost:8086/d4/tro/Prod3/do/Backup.php" \
-        "$EXEDIR/$3_$2_$1.db"
-        Pop $0
-        StrCmp $0 "OK" dlok
-        FileOpen $4 "$EXEDIR\Error.log" a
-        FileSeek $4 0 END
-        FileWrite $4 "$0$\r$\n" ; write error log
-        FileClose $4 ; and close the file
-        ;MessageBox MB_OK|MB_ICONEXCLAMATION "http upload Error $0" /SD IDOK
-        ;MessageBox MB_OK "Download failed: $0"
-        Quit
-        dlok:
-
-        ;NSISdl::download http://ledaco.com/bokningsdemo/do/Backup.php?script=true "$EXEDIR/$3_$2_$1.sql.zip"
-        ;NSISdl::download_quiet http://ledaco.com/bokningsdemo/do/Backup2.php "$EXEDIR/downloaded.txt"
-        ;Pop $R0 ;Get the return value
-        ;StrCmp $R0 "success" +6
-*/
-        Quit
+    Quit
 SectionEnd
 
 Section -AdditionalIcons

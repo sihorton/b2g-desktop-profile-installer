@@ -90,14 +90,6 @@ Section "b2g-desktop" SEC01
   File /r /x ".git" "${B2G_DIR_SRC}\"
   File "${PROFILE_DIR_SRC}\gkmedias.dll"
 
-/*
-; Shortcuts
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g.exe"
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g.exe"
-  !insertmacro MUI_STARTMENU_WRITE_END
-*/
 SectionEnd
 
 Section "Gaia UI" SEC02
@@ -119,21 +111,7 @@ Section "Gaia UI" SEC02
   File /r /x ".git" /x "install.bat" "${PROFILE_DIR_SRC}\"
 
   SetOutPath "$INSTDIR"
-  ;CreateShortCut "$INSTDIR\b2g-desktop.lnk" "$INSTDIR\b2g.exe" \
-  ;'-profile "${PROFILE_DIR_DEST}"'
-
-
-
-/*
-; Shortcuts
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR_DEST}"'
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\b2g.exe" \
-  '-profile "${PROFILE_DIR_DEST}"'
-  !insertmacro MUI_STARTMENU_WRITE_END
-*/
+  
 SectionEnd
 
 ; Section descriptions
@@ -141,77 +119,6 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "an emulator for running boot2gecko on a windows pc."
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Gaia is the user interface (webapps and os user interface) for boot2gecko"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
-
-/*
-Section -AdditionalIcons
-  SetShellVarContext all
-  SetOutPath $INSTDIR
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-
-  !insertmacro CreateInternetShortcut \
-      "$SMPROGRAMS\$ICONS_GROUP\Website.url" \
-      "http://github.com/sihorton/b2g-desktop-profile-installer/"
-
-  !insertmacro CreateInternetShortcut \
-      "$SMPROGRAMS\$ICONS_GROUP\Boot2Gecko.url" \
-      "http://developer.mozilla.org/en/Mozilla/Boot_to_Gecko/"
-  
-  !insertmacro CreateInternetShortcut \
-      "$SMPROGRAMS\$ICONS_GROUP\b2g-desktop downloads.url" \
-      "http://ftp.mozilla.org/pub/mozilla.org/b2g/nightly/latest-mozilla-central/"
-
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
-  !insertmacro MUI_STARTMENU_WRITE_END
-SectionEnd
-
-Section -Post
-  SetShellVarContext all
-  WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\b2g.exe"
-  
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallDir" "$INSTDIR"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\b2g.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
-SectionEnd
-
-Function un.onUninstSuccess
-  HideWindow
-  IfSilent +2 0
-  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer."
-FunctionEnd
-
-Function un.onInit
-IfSilent silent noisy
-  noisy:
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
-  Abort
-  goto ok
-  
-  silent:
-  SetAutoClose true
-
-  ok:
- 
-FunctionEnd
-
-Section Uninstall
-  SetShellVarContext all
-  !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
-  
-  Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
-  
-  RMDir /r "$SMPROGRAMS\$ICONS_GROUP"
-  RMDir /r "$INSTDIR\"
-  
-  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
-  DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
-  SetAutoClose true
-SectionEnd
-*/
 
 Function Launch-b2g
   ;ExecShell "" "$INSTDIR\b2g-desktop.lnk"

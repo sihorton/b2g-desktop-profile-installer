@@ -147,7 +147,7 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Gaia is the user interface (webapps and os user interface) for boot2gecko"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
-/*
+
 Section -AdditionalIcons
   SetShellVarContext all
   SetOutPath $INSTDIR
